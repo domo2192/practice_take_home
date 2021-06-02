@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_154105) do
+ActiveRecord::Schema.define(version: 2021_06_02_202311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customer_subscriptions", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "subscription_id", null: false
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_customer_subscriptions_on_customer_id"
+    t.index ["subscription_id"], name: "index_customer_subscriptions_on_subscription_id"
+  end
+
+  create_table "customer_tea_reviews", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "tea_id", null: false
+    t.float "rating"
+    t.text "review"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_customer_tea_reviews_on_customer_id"
+    t.index ["tea_id"], name: "index_customer_tea_reviews_on_tea_id"
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "first_name"
@@ -24,33 +45,21 @@ ActiveRecord::Schema.define(version: 2021_06_02_154105) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "customersubscriptions", force: :cascade do |t|
-    t.bigint "customer_id", null: false
-    t.bigint "subscription_id", null: false
-    t.integer "status", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["customer_id"], name: "index_customersubscriptions_on_customer_id"
-    t.index ["subscription_id"], name: "index_customersubscriptions_on_subscription_id"
-  end
-
-  create_table "customerteas", force: :cascade do |t|
-    t.bigint "customer_id", null: false
-    t.bigint "tea_id", null: false
-    t.float "rating"
-    t.text "review"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["customer_id"], name: "index_customerteas_on_customer_id"
-    t.index ["tea_id"], name: "index_customerteas_on_tea_id"
-  end
-
   create_table "subscriptions", force: :cascade do |t|
     t.string "title"
     t.string "price"
     t.string "frequency"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tea_subscriptions", force: :cascade do |t|
+    t.bigint "customer_subscription_id", null: false
+    t.bigint "tea_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_subscription_id"], name: "index_tea_subscriptions_on_customer_subscription_id"
+    t.index ["tea_id"], name: "index_tea_subscriptions_on_tea_id"
   end
 
   create_table "teas", force: :cascade do |t|
@@ -60,10 +69,13 @@ ActiveRecord::Schema.define(version: 2021_06_02_154105) do
     t.string "brew_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "tea_price"
   end
 
-  add_foreign_key "customersubscriptions", "customers"
-  add_foreign_key "customersubscriptions", "subscriptions"
-  add_foreign_key "customerteas", "customers"
-  add_foreign_key "customerteas", "teas"
+  add_foreign_key "customer_subscriptions", "customers"
+  add_foreign_key "customer_subscriptions", "subscriptions"
+  add_foreign_key "customer_tea_reviews", "customers"
+  add_foreign_key "customer_tea_reviews", "teas"
+  add_foreign_key "tea_subscriptions", "customer_subscriptions"
+  add_foreign_key "tea_subscriptions", "teas"
 end

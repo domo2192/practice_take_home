@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Customer, type: :model do
   describe 'relationships' do
-    it { should have_many :customersubscriptions }
-    it { should have_many(:subscriptions).through(:customersubscriptions) }
-    it { should have_many :customerteas }
-    it { should have_many(:teas).through(:customerteas) }
+    it { should have_many :customer_subscriptions }
+    it { should have_many(:subscriptions).through(:customer_subscriptions) }
+    it { should have_many :customer_tea_reviews }
+    it { should have_many(:teas).through(:customer_tea_reviews) }
   end
 
   describe 'validations' do
