@@ -5,4 +5,8 @@ RSpec.describe Customertea, type: :model do
     it { should belong_to :customer }
     it { should belong_to :tea }
   end
+  describe 'validations' do
+    it { should validate_presence_of :rating }
+    it { should validate_presence_of :review }
+  end
 end
