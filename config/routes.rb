@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :customers do
         post '/:id/subscriptions', to: 'customer_subscriptions#create'
+        patch '/:id/subscriptions/:id', to: 'customer_subscriptions#update'
       end
     end
-  end 
+  end
 end

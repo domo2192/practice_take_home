@@ -10,10 +10,16 @@ class Api::V1::Customers::CustomerSubscriptionsController < ApplicationControlle
     render json: { data: "Subscription created successfully."}, status: :created
   end
 
+  def update
+    customer_subscription = CustomerSubscription.find(params[:id])
+    customer_subscription.status = 'cancelled'
+    render json: CancelSerializer.new(customer_subscription.tea_subscriptions)
+  end
+
 
   private
   def validate_subscription
-    if params[:subscription] == nil || params[:subscription].empty? || Subscription.find_by(title: params['subscription']) == nil 
+    if params[:subscription] == nil || params[:subscription].empty? || Subscription.find_by(title: params['subscription']) == nil
       error = 'Enter a valid subscription type'
       render_error(error)
     end
