@@ -1,6 +1,6 @@
 class Api::V1::Customers::CustomerSubscriptionsController < ApplicationController
-  before_action :validate_id, only: [:create]
-  before_action :validate_customer, only: [:create]
+  before_action :validate_id, only: [:create, :update, :index]
+  before_action :validate_customer, only: [:create, :index]
   before_action :validate_subscription, only: [:create]
 
   def create
@@ -14,6 +14,12 @@ class Api::V1::Customers::CustomerSubscriptionsController < ApplicationControlle
     customer_subscription = CustomerSubscription.find(params[:id])
     customer_subscription.status = 'cancelled'
     render json: CancelSerializer.new(customer_subscription.tea_subscriptions)
+  end
+
+  def index
+    customer_subscriptions = Customer.find(params[:id]).customer_subscriptions
+    format_subscriptions = TeaFacade.format_subscriptions(customer_subscriptions)
+    render json: SubscriptionSerializer.new(format_subscriptions)
   end
 
 

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       namespace :customers do
         post '/:id/subscriptions', to: 'customer_subscriptions#create'
         patch '/:id/subscriptions/:id', to: 'customer_subscriptions#update'
+        get '/:id/subscriptions', to: 'customer_subscriptions#index'
       end
     end
   end
