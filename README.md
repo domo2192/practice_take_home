@@ -73,7 +73,8 @@ These instructions will get you a copy of the project up and running on your loc
 | ---------- | ------ | --------:|
 | Post | /api/v1/customers/:id/subscriptions | Create a new tea subscription. |
 | Patch | /api/v1/customers/:id/subscriptions/:id  | Cancel a past subscription. |
-| GET | /api/v1/customers/:id/subscriptions | Get all subscriptions including cancelled. |
+| GET | /api/v1/customers/:id/subscriptions | Get all subscriptions including cancelled. | 
+| Post | /api/v1/customers/:id/customer_tea_reviews| Create customer tea reviews | 
 
 
 ### Database Schema
