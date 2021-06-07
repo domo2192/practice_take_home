@@ -30,13 +30,13 @@ describe 'Cancel Customer Subscription' do
       cancelled_teas = JSON.parse(response.body, symbolize_names: true)[:data]
       expect(cancelled_teas.count).to eq(10)
       cancelled_teas.each do |tea|
-
-        expect(tea[:attributes][:teas][:data][:attributes]).to be_a(Hash)
-        expect(tea[:attributes][:teas][:data][:attributes][:title]).to be_a(String)
-        expect(tea[:attributes][:teas][:data][:attributes][:description]).to be_a(String)
-        expect(tea[:attributes][:teas][:data][:attributes][:temperature]).to be_a(Numeric)
-        expect(tea[:attributes][:teas][:data][:attributes][:brew_time]).to be_a(String)
-        expect(tea[:attributes][:teas][:data][:attributes][:tea_price]).to be_a(Numeric)
+        expect(tea[:attributes]).to be_a(Hash)
+        expect(tea[:type]).to eq("tea")
+        expect(tea[:attributes][:title]).to be_a(String)
+        expect(tea[:attributes][:description]).to be_a(String)
+        expect(tea[:attributes][:temperature]).to be_a(Numeric)
+        expect(tea[:attributes][:brew_time]).to be_a(String)
+        expect(tea[:attributes][:tea_price]).to be_a(Numeric)
       end
     end
   end

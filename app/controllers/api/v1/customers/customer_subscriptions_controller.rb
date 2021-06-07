@@ -13,7 +13,8 @@ class Api::V1::Customers::CustomerSubscriptionsController < ApplicationControlle
   def update
     customer_subscription = CustomerSubscription.find(params[:id])
     customer_subscription.status = 'cancelled'
-    render json: CancelSerializer.new(customer_subscription.tea_subscriptions)
+    teas = TeaFacade.format_cancels(customer_subscription.tea_subscriptions)
+    render json: TeaSerializer.new(teas)
   end
 
   def index

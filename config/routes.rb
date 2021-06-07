@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         post '/:id/subscriptions', to: 'customer_subscriptions#create'
         patch '/:id/subscriptions/:id', to: 'customer_subscriptions#update'
         get '/:id/subscriptions', to: 'customer_subscriptions#index'
+        post '/:id/customer_tea_reviews', to: 'customer_tea_reviews#create'
       end
     end
   end
